@@ -6,7 +6,7 @@ class Programmer {
     private final String name;
     private Set<ProgrammingLanguage> languages;
 
-    public Programmer(String name, Set<ProgrammingLanguage> languages) {
+    Programmer(String name, Set<ProgrammingLanguage> languages) {
         this.name = name;
         this.languages = languages;
     }
@@ -14,6 +14,10 @@ class Programmer {
     public Programmer(String name) {
         this.name = name;
         languages = new HashSet<>();
+    }
+
+    public String getName() {
+        return name;
     }
 
     boolean addLanguage(ProgrammingLanguage language) {
