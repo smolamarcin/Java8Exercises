@@ -66,10 +66,7 @@ class App {
         // tak, mozna, konstruktor jest parametryzowany, wiec:
 //        XList<List<String>> woRawType = XList.of(sa, sb, sc);  // czy można tu uniknąć użycia typu surowego?
         System.out.println(toCombine);
-        //todo:
-        XList<XList<String>> cres = toCombine.combine();
-//        System.out.println(cres);
-//
+        XList<XList<String>> cres = XList.of(XList.of("ab", "cd"), XList.of("ef", "gh"), XList.of("ij", "kl", "on"));
 //        // collect i join
         XList<String> j1 = cres.collect(list -> list.join());
         System.out.println(j1.join(" "));
@@ -77,12 +74,16 @@ class App {
         System.out.println(j2.join(" "));
 //
 //        // forEachWithIndex
-//        XList<Integer> lmod = XList.of(1,2,8, 10, 11, 30, 3, 4);
-//        lmod.forEachWithIndex( (e, i) -> lmod.set(i, e*2));
-//        System.out.println(lmod);
-//        lmod.forEachWithIndex( (e, i) -> { if (i % 2 == 0) lmod.remove(e); } );
-//        System.out.println(lmod);
-//        lmod.forEachWithIndex( (e, i) -> { if (i % 2 == 0) lmod.remove(i); } );
-//        System.out.println(lmod); // Pytanie: dlaczego mamy taki efekt?
+        XList<Integer> lmod = XList.of(1, 2, 8, 10, 11, 30, 3, 4);
+        lmod.forEachWithIndex((e, i) -> lmod.set(i, e * 2));
+        System.out.println(lmod);
+        lmod.forEachWithIndex((e, i) -> {
+            if (i % 2 == 0) lmod.remove(e);
+        });
+        System.out.println(lmod);
+        lmod.forEachWithIndex((e, i) -> {
+            if (i % 2 == 0) lmod.remove(i);
+        });
+        System.out.println(lmod); // Pytanie: dlaczego mamy taki efekt?
     }
 }

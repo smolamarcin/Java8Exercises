@@ -1,0 +1,9 @@
+1. of factory method in XList. Argument should be Collection<T> or COllection<? extends T>
+
+Ans: Collection is a producer.
+
+2. WHat is a benefit of <? extends T> in Constructor
+
+Ans: ?
+
+3. Collect method in XList. Is it good-designed?

@@ -1,6 +1,7 @@
 package com.smola;
 
 import java.util.*;
+import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,7 @@ public class XList<E> implements List<E> {
         return new XList<>(elements);
     }
 
+    // E cannot be referenced from static context!!!
     public static <T> XList<T> of(Collection<? extends T> collection) {
         return new XList<>(collection);
     }
@@ -172,56 +174,43 @@ public class XList<E> implements List<E> {
 
 
     public XList diff(Collection<E> set) {
-        List<E> diffs = new ArrayList<>();
-        diffs.addAll(this.list);
+        List<E> diffs = new ArrayList<>(this);
         diffs.removeAll(set);
         return of(diffs);
     }
 
     public XList<E> unique() {
-        return of(this.list.stream()
+        return of(this.stream()
                 .distinct()
                 .collect(Collectors.toList()));
     }
 
-    //todo!!!
-    public <T> XList<T> combine() {
-//        List<List<T>> someList = new ArrayList<>();
-//        List<T> combined = new ArrayList<>();
-//        for (E e : list) {
-//            List singleList = (List) e;
-//            someList.add(singleList);
-//        }
-//
-//        for (List<T> es : someList) {
-//            for (T t : es) {
-//                combined.add(t);
-//                continue;
-//            }
-//        }
-        throw new UnsupportedOperationException("Not implemented yet!");
-    }
 
-    //todo: ask artem
-    public <T> XList<T> collect(Function<E, T> function) {
-        System.err.println(function);
-        List<T> modified = list.stream()
+    //todo: ask artem -> is it correct?
+    public <R> XList<R> collect(Function<E, R> function) {
+        List<R> collect = this.stream()
                 .map(function::apply)
                 .collect(toList());
-        return of(modified);
+        return of(collect);
     }
 
     public String join() {
-        String collect = list.stream()
-                .map(Object::toString)
-                .collect(joining(""));
-        return collect;
+        return this.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(""));
     }
 
     public String join(String delimiter) {
-        String collect = list.stream()
+        return this.stream()
                 .map(String::valueOf)
                 .collect(joining(delimiter));
-        return collect;
     }
+
+    void forEachWithIndex(BiConsumer<E, Integer> biConsumer) {
+        for (int i = 0; i < this.size(); i++) {
+            biConsumer.accept(this.get(i), i);
+        }
+    }
+
+
 }

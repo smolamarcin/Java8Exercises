@@ -1,0 +1,7 @@
+c00004;Nowak Anna;bananas;4.0;50.0
+c00003;Kowalski Jan;milk;4.0;5.0
+c00001;Kowalski Jan;milk;4.0;10.0
+c00001;Kowalski Jan;milk;5.0;2.0
+c00002;Malina Jan;milk;4.0;2.0
+c00002;Malina Jan;bread;3.0;5.0
+c00001;Kowalski Jan;roll;2.0;100.0
