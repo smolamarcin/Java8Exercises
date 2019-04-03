@@ -8,10 +8,13 @@ import static java.util.stream.Collectors.toList;
 
 class ClientsService {
     private ClientRepository clientRepository;
+    private ClientsFileReader clientsFileReader;
 
-    public ClientsService(ClientRepository clientRepository) {
+    ClientsService(ClientRepository clientRepository, ClientsFileReader clientsFileReader) {
         this.clientRepository = clientRepository;
+        this.clientsFileReader = clientsFileReader;
     }
+
 
     Client findByFullName(String fullName) {
         return clientRepository.findByFullName(fullName)
@@ -55,5 +58,9 @@ class ClientsService {
                     return singleProductPrice.multiply(BigDecimal.valueOf(nbOfProducts));
                 })
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    Collection<Client> getAll() {
+        return clientRepository.findAll();
     }
 }

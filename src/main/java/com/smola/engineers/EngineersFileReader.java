@@ -1,34 +1,32 @@
 package com.smola.engineers;
 
-import com.smola.FileReader;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
 
-class EngineersFileReader implements FileReader {
-    public static final int LANGUAGE_NAME_COLUMN = 0;
+class EngineersFileReader {
+    private static final int LANGUAGE_NAME_COLUMN = 0;
+    private static final int FIRST_PROGRAMMER_COLUMN = LANGUAGE_NAME_COLUMN + 1;
     private final String fileName;
     private final List<String[]> lines;
 
     public EngineersFileReader(String fileName) {
         this.fileName = fileName;
-        lines = new ArrayList<>();
+        this.lines = new ArrayList<>();
         loadFile();
     }
 
     private void loadFile() {
-        try (Stream<String> linesStream = this.loadFileIntoStream(fileName)) {
-            linesStream
+        try {
+            Files.lines(Paths.get(fileName))
                     .map(e -> e.split("\t"))
                     .forEach(lines::add);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("File not found");
         }
     }
 
@@ -42,13 +40,14 @@ class EngineersFileReader implements FileReader {
 
     public Map<ProgrammingLanguage, List<Programmer>> findProgramersGroupedByLanguages() {
         List<Programmer> allProgrammers = new ArrayList<>();
-        lines.forEach(line -> {
+        for (String[] line : lines) {
             ProgrammingLanguage programmingLanguage = new ProgrammingLanguage(line[LANGUAGE_NAME_COLUMN]);
-            for (int i = LANGUAGE_NAME_COLUMN + 1; i < line.length; i++) {
+            int lastColumn = line.length;
+            for (int i = FIRST_PROGRAMMER_COLUMN; i < lastColumn; i++) {
                 Programmer programmer = new Programmer(line[i]);
                 updateProgrammerLanguages(allProgrammers, programmer, programmingLanguage);
             }
-        });
+        }
 
         Map<ProgrammingLanguage, List<Programmer>> languageListMap = groupByLanguages(allProgrammers);
         return languageListMap;
@@ -56,32 +55,30 @@ class EngineersFileReader implements FileReader {
 
     private Map<ProgrammingLanguage, List<Programmer>> groupByLanguages(List<Programmer> programmers) {
         Map<ProgrammingLanguage, List<Programmer>> languageListMap = new HashMap<>();
+
         for (Programmer programmer : programmers) {
-            programmer.getLanguages().forEach(e -> {
-                if (languageListMap.containsKey(e)) {
-                    List<Programmer> currentLanguageProgrammers = languageListMap.get(e);
-                    currentLanguageProgrammers.add(programmer);
-                } else {
-                    List<Programmer> currentLanguageProgrammers = new ArrayList<>();
-                    currentLanguageProgrammers.add(programmer);
-                    languageListMap.put(e, currentLanguageProgrammers);
-                }
-            });
+            for (ProgrammingLanguage programmingLanguage : programmer.getLanguages()) {
+                languageListMap.merge(programmingLanguage, new ArrayList<>(Collections.singletonList(programmer)), (l1, l2) -> {
+                    l2.addAll(l1);
+                    return l2;
+                });
+            }
         }
         return languageListMap;
     }
 
+
     private void updateProgrammerLanguages(List<Programmer> allProgrammers, Programmer programmer, ProgrammingLanguage programmingLanguage) {
-        Optional<Programmer> toUpdate = allProgrammers.stream()
+        allProgrammers.stream()
                 .filter(e -> e.equals(programmer))
-                .findFirst();
-
-        if (toUpdate.isPresent()) {
-            toUpdate.get().addLanguage(programmingLanguage);
-        } else {
-            programmer.addLanguage(programmingLanguage);
-            allProgrammers.add(programmer);
-        }
-
+                .findFirst()
+                .map(e -> e.addLanguage(programmingLanguage))
+                .orElseGet(() -> addNewProgrammer(allProgrammers, programmer, programmingLanguage));
     }
+
+    private boolean addNewProgrammer(List<Programmer> allProgrammers, Programmer programmer, ProgrammingLanguage programmingLanguage) {
+        programmer.addLanguage(programmingLanguage);
+        return allProgrammers.add(programmer);
+    }
+
 }

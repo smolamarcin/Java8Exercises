@@ -19,11 +19,6 @@ public class EngineersFileReaderTest {
         engineersFileReader = new EngineersFileReader(TEST_FILE_NAME);
     }
 
-    @Test
-    public void shouldLoadAllLines() throws IOException {
-        Stream<String> stringStream = engineersFileReader.loadFileIntoStream(TEST_FILE_NAME);
-        assertThat(stringStream.collect(toList()).size()).isEqualTo(5);
-    }
 
     @Test
     public void shouldReadAllLanguagesFromFile() {

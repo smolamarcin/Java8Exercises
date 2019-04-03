@@ -3,6 +3,7 @@ package com.smola.shopping;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.io.FileReader;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -16,11 +17,13 @@ public class ClientsServiceTest {
     private ClientRepository clientRepository;
     private ClientsService clientsService;
     private Set<Client> clients;
+    private ClientsFileReader clientsFileReader;
 
     @BeforeClass
     public void setUp() {
         clientRepository = mock(ClientRepository.class);
-        clientsService = new ClientsService(clientRepository);
+        clientsFileReader = mock(ClientsFileReader.class);
+        clientsService = new ClientsService(clientRepository, clientsFileReader);
     }
 
     @Test
