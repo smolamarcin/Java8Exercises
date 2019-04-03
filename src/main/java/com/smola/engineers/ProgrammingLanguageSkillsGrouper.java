@@ -5,12 +5,16 @@ import java.util.*;
 import static com.smola.engineers.ProgrammersFileConstants.FIRST_PROGRAMMER_COLUMN;
 import static com.smola.engineers.ProgrammersFileConstants.LANGUAGE_NAME_COLUMN;
 
-public class ProgrammingLanguageSkillsGrouper implements Grouper<Map<ProgrammingLanguage, List<Programmer>>> {
+public class ProgrammingLanguageSkillsGrouper extends AbstractGrouper implements Grouper<Map<ProgrammingLanguage, List<Programmer>>> {
 
 
-    public Map<ProgrammingLanguage, List<Programmer>> group(List<String[]> lines) {
+    public ProgrammingLanguageSkillsGrouper(EngineersFileReader engineersFileReader) {
+        super(engineersFileReader);
+    }
+
+    public Map<ProgrammingLanguage, List<Programmer>> group() {
         List<Programmer> allProgrammers = new ArrayList<>();
-        for (String[] line : lines) {
+        for (String[] line : super.engineersFileReader.readFile()) {
             ProgrammingLanguage programmingLanguage = new ProgrammingLanguage(line[LANGUAGE_NAME_COLUMN]);
             int lastColumn = line.length;
             for (int i = FIRST_PROGRAMMER_COLUMN; i < lastColumn; i++) {

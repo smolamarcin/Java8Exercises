@@ -17,12 +17,12 @@ public class WololoGrouperTest {
     @BeforeClass
     public void setUp() {
         engineersFileReader = new EngineersFileReader(TEST_FILE_NAME);
-        grouper = new WololoGrouper();
+        grouper = new WololoGrouper(engineersFileReader);
     }
 
     @Test
     public void shouldReturnMap_withProgrammerName_andKnownLanguages() {
-        Map<String, Set<ProgrammingLanguage>> actual = grouper.group(engineersFileReader.readFile());
+        Map<String, Set<ProgrammingLanguage>> actual = grouper.group();
 
         assertThat(actual.get("Z")).containsExactly(new ProgrammingLanguage("Java"),new ProgrammingLanguage("Groovy"));
     }

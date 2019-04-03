@@ -14,13 +14,13 @@ public class ProgrammingLanguagesGrouperTest {
 
     @BeforeMethod
     public void setUp() {
-        grouper = new ProgrammingLanguagesGrouper();
         engineersFileReader = new EngineersFileReader(TEST_FILE_NAME);
+        grouper = new ProgrammingLanguagesGrouper(engineersFileReader);
     }
 
     @Test
     public void shouldReadAllLanguagesFromFile() {
-        Collection<ProgrammingLanguage> languages = grouper.group(engineersFileReader.readFile());
+        Collection<ProgrammingLanguage> languages = grouper.group();
         assertThat(languages).extracting("name")
                 .containsOnly("Groovy", "Java", "C++", "C#", "Scala");
     }

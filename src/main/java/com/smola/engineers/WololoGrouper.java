@@ -10,11 +10,15 @@ import static com.smola.engineers.ProgrammersFileConstants.FIRST_PROGRAMMER_COLU
 import static com.smola.engineers.ProgrammersFileConstants.LANGUAGE_NAME_COLUMN;
 
 //todo: name!!! -> this class return a map, where key is programmer name and value is list of his languages
-class WololoGrouper implements Grouper<Map<String, Set<ProgrammingLanguage>>> {
+class WololoGrouper extends AbstractGrouper implements Grouper<Map<String, Set<ProgrammingLanguage>>> {
+    public WololoGrouper(EngineersFileReader engineersFileReader) {
+        super(engineersFileReader);
+    }
+
     @Override
-    public Map<String, Set<ProgrammingLanguage>> group(List<String[]> lines) {
+    public Map<String, Set<ProgrammingLanguage>> group() {
         List<Programmer> allProgrammers = new ArrayList<>();
-        for (String[] line : lines) {
+        for (String[] line : super.engineersFileReader.readFile()) {
             ProgrammingLanguage programmingLanguage = new ProgrammingLanguage(line[LANGUAGE_NAME_COLUMN]);
             int lastColumn = line.length;
             for (int i = FIRST_PROGRAMMER_COLUMN; i < lastColumn; i++) {

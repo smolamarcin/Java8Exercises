@@ -9,7 +9,7 @@ import java.util.*;
 import static com.smola.engineers.ProgrammersFileConstants.FILE_DELIMITER;
 import static java.util.stream.Collectors.toList;
 
-class EngineersFileReader {
+class EngineersFileReader implements FileReader{
 
     private final String fileName;
 
@@ -17,7 +17,7 @@ class EngineersFileReader {
         this.fileName = fileName;
     }
 
-    List<String[]> readFile() {
+    public List<String[]> readFile() {
         try {
             return Files.lines(Paths.get(fileName))
                     .map(e -> e.split(FILE_DELIMITER))
