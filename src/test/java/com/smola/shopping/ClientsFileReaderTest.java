@@ -1,5 +1,6 @@
 package com.smola.shopping;
 
+import com.smola.FileReader;
 import com.smola.shopping.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -13,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.mock;
 
 public class ClientsFileReaderTest {
-    private static final String TEST_FILE_NAME = "src/test/resources/clients.txt";
+    private static final String TEST_FILE_NAME = "src/test/resources/clients-test.txt";
     ClientsFileReader fileReader;
     private ClientRepository clientRepository;
 

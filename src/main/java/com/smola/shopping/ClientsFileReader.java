@@ -22,15 +22,9 @@ class ClientsFileReader implements FileReader {
         this.clientRepository = clientRepository;
     }
 
-    public void loadFile(String fileName) {
-        clientRepository.save(readClients(fileName));
-    }
-
-
-
-    public List<Client> readClients(String fileName) {
+    List<Client> readClients(String fileName) {
         List<Client> clients = new ArrayList<>();
-        try (Stream<String> linesStream = this.loadFileIntoStream(fileName)) {
+        try (Stream<String> linesStream = loadFileIntoStream(fileName)) {
             linesStream
                     .map(e -> e.split(DELIMITER))
                     .forEach(singleLine -> {

@@ -1,0 +1,46 @@
+package com.smola.engineers;
+
+import java.util.*;
+
+class Programmer {
+    private final String name;
+    private Set<ProgrammingLanguage> languages;
+
+    public Programmer(String name, Set<ProgrammingLanguage> languages) {
+        this.name = name;
+        this.languages = languages;
+    }
+
+    public Programmer(String name) {
+        this.name = name;
+        languages = new HashSet<>();
+    }
+
+    boolean addLanguage(ProgrammingLanguage language) {
+        return this.languages.add(language);
+    }
+
+    public Set<ProgrammingLanguage> getLanguages() {
+        return Collections.unmodifiableSet(languages);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Programmer that = (Programmer) o;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
+    @Override
+    public String toString() {
+        return "Programmer{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+}

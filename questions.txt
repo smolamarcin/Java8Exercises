@@ -7,3 +7,7 @@ Ans: Collection is a producer.
 Ans: ?
 
 3. Collect method in XList. Is it good-designed?
+
+4. What is better? To hold whole file in memory or load it when neccessary?
+
+Ans: Hold data in some collection? Idk, TODO!!!

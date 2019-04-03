@@ -1,8 +1,8 @@
 package com.smola.shopping;
 
 class Order {
-    private Product product;
-    private Double nbOfProducts;
+    private final Product product;
+    private final Double nbOfProducts;
 
     public Order(Product product, Double nbOfProducts) {
         this.product = product;

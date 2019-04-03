@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Objects;
 
 class Client {
-    private String id;
-    private String fullName;
+    private final String id;
+    private final String fullName;
     private List<Order> orders = new ArrayList<>();
 
     public Client(String id, String fullName) {
