@@ -1,7 +1,8 @@
-package com.smola;
+package com.smola.shopping;
 
+import com.smola.shopping.Client;
+import com.smola.shopping.ClientRepository;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
@@ -10,7 +11,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.testng.Assert.*;
 
 public class ClientRepositoryTest {
     private ClientRepository clientRepository;

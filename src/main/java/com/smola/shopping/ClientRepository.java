@@ -1,4 +1,4 @@
-package com.smola;
+package com.smola.shopping;
 
 import java.util.*;
 
@@ -18,5 +18,9 @@ class ClientRepository {
 
     public Collection<Client> findAll() {
         return Collections.unmodifiableCollection(clients);
+    }
+
+    public boolean save(Collection<Client> clients) {
+        return this.clients.addAll(clients);
     }
 }

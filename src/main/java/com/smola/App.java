@@ -1,5 +1,7 @@
 package com.smola;
 
+import com.smola.xlist.XList;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;

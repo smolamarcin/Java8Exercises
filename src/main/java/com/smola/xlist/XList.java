@@ -1,4 +1,4 @@
-package com.smola;
+package com.smola.xlist;
 
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -206,7 +206,7 @@ public class XList<E> implements List<E> {
                 .collect(joining(delimiter));
     }
 
-    void forEachWithIndex(BiConsumer<E, Integer> biConsumer) {
+    public void forEachWithIndex(BiConsumer<E, Integer> biConsumer) {
         for (int i = 0; i < this.size(); i++) {
             biConsumer.accept(this.get(i), i);
         }

@@ -1,10 +1,10 @@
 package com.smola;
 
+import com.smola.xlist.XList;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
