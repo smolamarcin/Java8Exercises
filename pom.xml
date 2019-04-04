@@ -7,6 +7,12 @@
     <groupId>com.smola</groupId>
     <artifactId>Java8Exercises</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <properties>
+        <testng.version>6.14.3</testng.version>
+        <assertj-core.version>3.12.2</assertj-core.version>
+        <powermock-module-testng.version>2.0.0</powermock-module-testng.version>
+        <powermock-api-mockito.version>1.7.4</powermock-api-mockito.version>
+    </properties>
     <build>
         <plugins>
             <plugin>
@@ -23,25 +29,35 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>6.14.3</version>
+            <version>${testng.version}</version>
             <scope>test</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.assertj/assertj-core -->
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.12.2</version>
+            <version>${assertj-core.version}</version>
             <scope>test</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
+
+        <!-- https://mvnrepository.com/artifact/org.powermock/powermock-module-testng -->
         <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>2.25.1</version>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-testng</artifactId>
+            <version>${powermock-module-testng.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.powermock/powermock-api-mockito -->
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-mockito</artifactId>
+            <version>${powermock-api-mockito.version}</version>
             <scope>test</scope>
         </dependency>
 
 
     </dependencies>
+
 
 </project>

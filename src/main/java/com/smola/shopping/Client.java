@@ -7,11 +7,12 @@ import java.util.Objects;
 class Client {
     private final String id;
     private final String fullName;
-    private List<Order> orders = new ArrayList<>();
+    private List<Order> orders;
 
     public Client(String id, String fullName) {
         this.id = id;
         this.fullName = fullName;
+        this.orders = new ArrayList<>();
     }
 
     public Client(String id, String fullName, List<Order> orders) {

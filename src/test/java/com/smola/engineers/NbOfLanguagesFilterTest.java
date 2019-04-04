@@ -5,11 +5,10 @@ import org.testng.annotations.Test;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
+import static com.smola.engineers.ProgrammersProvider.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.util.Arrays.asList;
 
 public class NbOfLanguagesFilterTest {
     private NbOfLanguagesFilter nbOfLanguagesFilter;
@@ -21,12 +20,11 @@ public class NbOfLanguagesFilterTest {
 
     @Test
     public void shouldFindProgrammerWithSufficientNumberOfKnownLanguages() {
-        Programmer firstDev = new Programmer("First", Arrays.asList(new ProgrammingLanguage("Java"), new ProgrammingLanguage("Groovy")));
-        Programmer secondDev = new Programmer("Second", Arrays.asList(new ProgrammingLanguage("Java")));
-
-        Map<Programmer, Collection<ProgrammingLanguage>> filtered = nbOfLanguagesFilter.filter(Arrays.asList(firstDev, secondDev), 2);
+        int demandedNbOfKnownLanguages = mostSkilledProgrammer.getLanguages().size();
+        Map<Programmer, Collection<ProgrammingLanguage>> filtered = nbOfLanguagesFilter.filter(Arrays.asList(firstSampleProgrammer,
+                secondSampleProgrammer, mostSkilledProgrammer), demandedNbOfKnownLanguages);
 
         assertThat(filtered.size()).isEqualTo(1);
-        assertThat(filtered.keySet()).containsExactly(new Programmer("First"));
+        assertThat(filtered.keySet()).containsExactly(mostSkilledProgrammer);
     }
 }
