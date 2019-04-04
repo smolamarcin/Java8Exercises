@@ -8,7 +8,7 @@ import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
-class ProgrammersFileParser extends AbstractFileParser implements FileParser<Programmer> {
+class ProgrammersFileParser extends AbstractFileParser<Programmer> {
     private static final String FILE_DELIMITER = "\t";
     private static final int LANGUAGE_NAME_COLUMN = 0;
     private static final int FIRST_PROGRAMMER_COLUMN = LANGUAGE_NAME_COLUMN + 1;

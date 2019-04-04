@@ -1,9 +1,14 @@
 package com.smola.engineers;
 
-abstract class AbstractFileParser {
+import java.util.Collection;
+
+abstract class AbstractFileParser<E> {
     String fileName;
 
     public AbstractFileParser(String fileName) {
         this.fileName = fileName;
     }
+
+    public abstract Collection<E> parseFile();
+
 }
