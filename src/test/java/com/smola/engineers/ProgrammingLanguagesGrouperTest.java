@@ -9,18 +9,18 @@ import static com.smola.engineers.TestsConstants.TEST_FILE_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProgrammingLanguagesGrouperTest {
-    private Grouper<Collection<ProgrammingLanguage>> grouper;
-    private EngineersFileReader engineersFileReader;
+    private Grouper<Collection<ProgrammingLanguage>, Programmer> grouper;
+    private ProgrammersFileParser engineersFileReader;
 
     @BeforeMethod
     public void setUp() {
-        engineersFileReader = new EngineersFileReader(TEST_FILE_NAME);
-        grouper = new ProgrammingLanguagesGrouper(engineersFileReader);
+        engineersFileReader = new ProgrammersFileParser(TEST_FILE_NAME);
+        grouper = new ProgrammingLanguagesGrouper();
     }
 
     @Test
     public void shouldReadAllLanguagesFromFile() {
-        Collection<ProgrammingLanguage> languages = grouper.group();
+        Collection<ProgrammingLanguage> languages = grouper.group(engineersFileReader.parseFile());
         assertThat(languages).extracting("name")
                 .containsOnly("Groovy", "Java", "C++", "C#", "Scala");
     }

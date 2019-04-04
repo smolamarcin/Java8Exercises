@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.mock;
 
-public class ClientsFileReaderTest {
+public class ClientsFileParserTest {
     private static final String TEST_FILE_NAME = "src/test/resources/clients-test.txt";
     ClientsFileReader fileReader;
 

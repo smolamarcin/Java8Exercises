@@ -10,17 +10,18 @@ import static com.smola.engineers.TestsConstants.TEST_FILE_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProgrammingLanguageSkillsGrouperTest {
-    private Grouper<Map<ProgrammingLanguage, List<Programmer>>> grouper;
-    private EngineersFileReader engineersFileReader;
+    private Grouper<Map<ProgrammingLanguage, List<Programmer>>, Programmer> grouper;
+    private ProgrammersFileParser engineersFileReader;
+
     @BeforeClass
     public void setUp() {
-        engineersFileReader = new EngineersFileReader(TEST_FILE_NAME);
-        grouper = new ProgrammingLanguageSkillsGrouper(engineersFileReader);
+        engineersFileReader = new ProgrammersFileParser(TEST_FILE_NAME);
+        grouper = new ProgrammingLanguageSkillsGrouper();
     }
 
     @Test
     public void shouldReturnMapWithAvailableProgrammersForEveryLanguage() {
-        Map<ProgrammingLanguage, List<Programmer>> availableProgrammers = grouper.group();
+        Map<ProgrammingLanguage, List<Programmer>> availableProgrammers = grouper.group(engineersFileReader.parseFile());
 
         List<Programmer> groovy = availableProgrammers.get(new ProgrammingLanguage("Groovy"));
 

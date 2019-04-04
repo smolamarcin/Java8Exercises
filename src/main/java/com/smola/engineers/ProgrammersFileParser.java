@@ -1,24 +1,37 @@
 package com.smola.engineers;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
-import static com.smola.engineers.ProgrammersFileConstants.FIRST_PROGRAMMER_COLUMN;
-import static com.smola.engineers.ProgrammersFileConstants.LANGUAGE_NAME_COLUMN;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
 
-//todo: name!!! -> this class return a map, where key is programmer name and value is list of his languages
-class WololoGrouper extends AbstractGrouper implements Grouper<Map<String, Set<ProgrammingLanguage>>> {
-    public WololoGrouper(EngineersFileReader engineersFileReader) {
-        super(engineersFileReader);
+import static java.util.stream.Collectors.toList;
+
+class ProgrammersFileParser extends AbstractFileParser implements FileParser<Programmer> {
+    private static final String FILE_DELIMITER = "\t";
+    private static final int LANGUAGE_NAME_COLUMN = 0;
+    private static final int FIRST_PROGRAMMER_COLUMN = LANGUAGE_NAME_COLUMN + 1;
+
+    ProgrammersFileParser(String fileName) {
+        super(fileName);
     }
 
+    private List<String[]> loadFile() {
+        try {
+            return Files.lines(Paths.get(fileName))
+                    .map(e -> e.split(FILE_DELIMITER))
+                    .collect(toList());
+        } catch (IOException e) {
+            throw new RuntimeException("File not found");
+        }
+    }
+
+
     @Override
-    public Map<String, Set<ProgrammingLanguage>> group() {
+    public Collection<Programmer> parseFile() {
         List<Programmer> allProgrammers = new ArrayList<>();
-        for (String[] line : super.engineersFileReader.readFile()) {
+        for (String[] line : this.loadFile()) {
             ProgrammingLanguage programmingLanguage = new ProgrammingLanguage(line[LANGUAGE_NAME_COLUMN]);
             int lastColumn = line.length;
             for (int i = FIRST_PROGRAMMER_COLUMN; i < lastColumn; i++) {
@@ -26,9 +39,7 @@ class WololoGrouper extends AbstractGrouper implements Grouper<Map<String, Set<P
                 updateProgrammerLanguages(allProgrammers, programmer, programmingLanguage);
             }
         }
-
-        return allProgrammers.stream()
-                .collect(Collectors.toMap(Programmer::getName, Programmer::getLanguages));
+        return allProgrammers;
     }
 
     private void updateProgrammerLanguages(List<Programmer> allProgrammers, Programmer programmer, ProgrammingLanguage programmingLanguage) {

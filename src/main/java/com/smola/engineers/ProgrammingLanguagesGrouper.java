@@ -1,22 +1,17 @@
 package com.smola.engineers;
 
 import java.util.Collection;
-import java.util.List;
 
-import static com.smola.engineers.ProgrammersFileConstants.LANGUAGE_NAME_COLUMN;
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
-public class ProgrammingLanguagesGrouper extends AbstractGrouper implements Grouper<Collection<ProgrammingLanguage>> {
-    ProgrammingLanguagesGrouper(EngineersFileReader engineersFileReader) {
-        super(engineersFileReader);
-    }
+public class ProgrammingLanguagesGrouper implements Grouper<Collection<ProgrammingLanguage>, Programmer> {
 
     @Override
-    public Collection<ProgrammingLanguage> group() {
-        return engineersFileReader
-                .readFile()
+    public Collection<ProgrammingLanguage> group(Collection<? extends Programmer> programmers) {
+        return programmers
                 .stream()
-                .map(e -> new ProgrammingLanguage(e[LANGUAGE_NAME_COLUMN]))
-                .collect(toList());
+                .flatMap(e -> e.getLanguages().stream())
+                .collect(toSet());
     }
+
 }
