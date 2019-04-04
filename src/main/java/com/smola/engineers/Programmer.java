@@ -4,9 +4,9 @@ import java.util.*;
 
 class Programmer {
     private final String name;
-    private Set<ProgrammingLanguage> languages;
+    private Collection<ProgrammingLanguage> languages;
 
-    Programmer(String name, Set<ProgrammingLanguage> languages) {
+    Programmer(String name, Collection<ProgrammingLanguage> languages) {
         this.name = name;
         this.languages = languages;
     }
@@ -24,8 +24,8 @@ class Programmer {
         return this.languages.add(language);
     }
 
-    public Set<ProgrammingLanguage> getLanguages() {
-        return Collections.unmodifiableSet(languages);
+    public Collection<ProgrammingLanguage> getLanguages() {
+        return Collections.unmodifiableCollection(languages);
     }
 
     @Override

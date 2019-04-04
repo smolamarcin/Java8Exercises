@@ -3,6 +3,7 @@ package com.smola.engineers;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
@@ -11,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class ProgrammerNameGrouperTest {
-    private Grouper<Map<String, Set<ProgrammingLanguage>>, Programmer> grouper;
+    private Grouper<Map<String, Collection<ProgrammingLanguage>>, Programmer> grouper;
     private ProgrammersFileParser engineersFileReader;
 
     @BeforeClass
@@ -22,7 +23,7 @@ public class ProgrammerNameGrouperTest {
 
     @Test
     public void shouldReturnMap_withProgrammerName_andKnownLanguages() {
-        Map<String, Set<ProgrammingLanguage>> actual = grouper.group(engineersFileReader.parseFile());
+        Map<String, Collection<ProgrammingLanguage>> actual = grouper.group(engineersFileReader.parseFile());
 
         assertThat(actual.get("Z")).containsExactly(new ProgrammingLanguage("Java"), new ProgrammingLanguage("Groovy"));
     }

@@ -4,5 +4,5 @@ import java.util.Collection;
 import java.util.List;
 
 public interface Grouper<R, T> {
-    R group(Collection<? extends T> collection);
+    R group(Collection<T> collection);
 }
