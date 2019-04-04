@@ -7,7 +7,7 @@ import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class NbOfLanguagesAndNamesSorterTest {
+public class NbOfLanguagesAndNamesGrouperTest {
     private NbOfLanguagesAndNamesSorter sortedGrouper;
     private List<Programmer> toSort;
     Set<ProgrammingLanguage> firstProgrammingLanguages;
@@ -46,7 +46,7 @@ public class NbOfLanguagesAndNamesSorterTest {
 
     @Test
     public void shouldSortProgrammersByNbOfKnownLanguages_andThenByName() {
-        SortedMap<Programmer, Collection<ProgrammingLanguage>> actualSorted = sortedGrouper.sort(toSort);
+        SortedMap<Programmer, Collection<ProgrammingLanguage>> actualSorted = sortedGrouper.group(toSort);
 
         assertThat(actualSorted.size()).isEqualTo(3);
         assertThat(actualSorted.firstKey().getName()).isEqualTo("Zb");

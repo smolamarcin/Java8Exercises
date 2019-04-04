@@ -1,14 +1,13 @@
 package com.smola.engineers;
 
 import java.util.*;
-import java.util.function.Function;
 
 import static java.util.stream.Collectors.toMap;
 
-class NbOfLanguagesAndNamesSorter implements Sorter<SortedMap<Programmer, Collection<ProgrammingLanguage>>, Programmer>{
+class NbOfLanguagesAndNamesSorter implements Grouper<SortedMap<Programmer, Collection<ProgrammingLanguage>>, Programmer> {
 
     @Override
-    public SortedMap<Programmer, Collection<ProgrammingLanguage>> sort(Collection<? extends Programmer> programmers) {
+    public SortedMap<Programmer, Collection<ProgrammingLanguage>> group(Collection<Programmer> programmers) {
         Comparator<Programmer> nbOfLanguages_Name_Comparator = (o1, o2) -> {
             if (o1.getLanguages().size() == o2.getLanguages().size()) {
                 return o1.getName().compareTo(o2.getName());

@@ -5,7 +5,6 @@ import org.testng.annotations.Test;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 
 import static com.smola.engineers.TestsConstants.TEST_FILE_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,7 +17,7 @@ public class ProgrammerNameGrouperTest {
     @BeforeClass
     public void setUp() {
         engineersFileReader = new ProgrammersFileParser(TEST_FILE_NAME);
-        grouper = new ProgrammerNameGrouper();
+        grouper = new ProgrammerNameSorter();
     }
 
     @Test
