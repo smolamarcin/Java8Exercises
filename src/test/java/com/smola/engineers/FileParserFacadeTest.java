@@ -1,22 +1,66 @@
 package com.smola.engineers;
 
+import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.testng.PowerMockTestCase;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.when;
 
 
-@PrepareForTest(FileType.class)
+@PrepareForTest({CsvFileParser.class, TsvFileParser.class, UnknownTypeFileService.class})
 public class FileParserFacadeTest extends PowerMockTestCase {
+    private FileParserFacade fileParserFacade;
+
+    @BeforeMethod
+    public void setUp() {
+        fileParserFacade = new FileParserFacade();
+    }
+
+    @AfterMethod
+    public void tearDown() {
+        fileParserFacade = null;
+    }
 
     @Test
-    public void shouldCallCsvParser_whenCsvFileComes() {
-        mockStatic(FileType.class);
-        when(FileType.of("csv")).thenReturn(FileType.CSV);
+    public void shouldCall_Csv_Parser_whenCsvFileComes() {
+        // given
+        PowerMockito.mockStatic(CsvFileParser.class);
         String sampleCsvFile = "sadasd.csv";
-        FileParserFacade facade = new FileParserFacade();
-        facade.parseFile(sampleCsvFile);
+
+        // when
+        fileParserFacade = new FileParserFacade();
+        fileParserFacade.parseFile(sampleCsvFile);
+
+        // then
+        PowerMockito.verifyStatic(CsvFileParser.class);
+    }
+
+    @Test
+    public void shouldCall_Tsv_Parser_whenCsvFileComes() {
+        // given
+        mockStatic(TsvFileParser.class);
+        String sampleTsvFile = "sadasd.tsv";
+
+        // when
+        fileParserFacade.parseFile(sampleTsvFile);
+
+        // then
+        PowerMockito.verifyStatic(TsvFileParser.class);
+    }
+
+    @Test
+    public void shouldCall_UnknownTypeParser_whenUnknownExtensionComes() {
+        // given
+        mockStatic(UnknownTypeFileService.class);
+        String filnameeWithUnknownExtension = "asdasdads.xyz";
+
+        // when
+        fileParserFacade.parseFile(filnameeWithUnknownExtension);
+
+        PowerMockito.verifyStatic(UnknownTypeFileService.class);
+
     }
 }

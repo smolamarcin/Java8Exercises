@@ -1,5 +1,9 @@
 package com.smola.engineers;
 
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.testng.PowerMockTestCase;
+import org.testng.IObjectFactory;
 import org.testng.annotations.*;
 
 import java.util.Arrays;
@@ -9,32 +13,26 @@ import java.util.Map;
 import static com.smola.engineers.ProgrammersProvider.firstSampleProgrammer;
 import static com.smola.engineers.ProgrammersProvider.secondSampleProgrammer;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.anyString;
-import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.when;
 
-
-public class ProgrammerNameGrouperTest {
+@PrepareForTest(CsvFileParser.class)
+public class ProgrammerNameGrouperTest extends PowerMockTestCase {
     private Grouper<Map<String, Collection<ProgrammingLanguage>>, Programmer> grouper;
-    private CsvFileParser csvFileParser;
+
 
     @BeforeMethod
     public void setUp() {
-        csvFileParser = mock(CsvFileParser.class);
         grouper = new ProgrammerNameSorter();
     }
 
-    @AfterMethod
-    public void tearDown() {
-        csvFileParser = null;
-    }
 
     @Test
     public void shouldReturnMap_withProgrammerName_andKnownLanguages() {
-        when(csvFileParser.parseFile(anyString())).thenReturn(Arrays.asList(firstSampleProgrammer, secondSampleProgrammer));
+        PowerMockito.mockStatic(CsvFileParser.class);
         String sampleFileName = "sampleFileName.txt";
+        when(CsvFileParser.parse(sampleFileName)).thenReturn(Arrays.asList(firstSampleProgrammer, secondSampleProgrammer));
 
-        Map<String, Collection<ProgrammingLanguage>> actual = grouper.group(engineersFileReader.parseFile(sampleFileName));
+        Map<String, Collection<ProgrammingLanguage>> actual = grouper.group(CsvFileParser.parse(sampleFileName));
 
         assertThat(actual.get(firstSampleProgrammer.getName()))
                 .hasSize(firstSampleProgrammer.getLanguages().size())

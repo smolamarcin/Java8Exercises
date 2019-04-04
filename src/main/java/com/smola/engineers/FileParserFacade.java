@@ -3,6 +3,7 @@ package com.smola.engineers;
 import java.util.Collection;
 
 public class FileParserFacade {
+
     Collection<Programmer> parseFile(String fileName) {
         FileType fileType = detectFileType(fileName);
         return fileType.parsingStrategy.apply(fileName);

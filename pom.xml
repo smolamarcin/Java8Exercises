@@ -10,8 +10,7 @@
     <properties>
         <testng.version>6.14.3</testng.version>
         <assertj-core.version>3.12.2</assertj-core.version>
-        <powermock-module-testng.version>2.0.0</powermock-module-testng.version>
-        <powermock-api-mockito.version>1.7.4</powermock-api-mockito.version>
+        <powermock.version>1.7.4</powermock.version>
     </properties>
     <build>
         <plugins>
@@ -39,20 +38,16 @@
             <version>${assertj-core.version}</version>
             <scope>test</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
-
-        <!-- https://mvnrepository.com/artifact/org.powermock/powermock-module-testng -->
         <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-module-testng</artifactId>
-            <version>${powermock-module-testng.version}</version>
+            <version>${powermock.version}</version>
             <scope>test</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.powermock/powermock-api-mockito -->
         <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-api-mockito</artifactId>
-            <version>${powermock-api-mockito.version}</version>
+            <version>${powermock.version}</version>
             <scope>test</scope>
         </dependency>
 
