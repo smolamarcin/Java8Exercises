@@ -6,8 +6,8 @@ import java.util.*;
 public class ProgrammingLanguageSkillsGrouper implements Grouper<Map<ProgrammingLanguage, List<Programmer>>, Programmer> {
 
     @Override
-    public Map<ProgrammingLanguage, List<Programmer>> group(Collection<Programmer> programmers) {
-        Map<ProgrammingLanguage, List<Programmer>> languageListMap = groupByLanguages(programmers);
+    public Map<ProgrammingLanguage, List<Programmer>> group(Collection<Programmer> toGroup) {
+        Map<ProgrammingLanguage, List<Programmer>> languageListMap = groupByLanguages(toGroup);
         return languageListMap;
     }
 

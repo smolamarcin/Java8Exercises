@@ -7,7 +7,7 @@ import static java.util.stream.Collectors.toMap;
 class NbOfLanguagesAndNamesSorter implements Grouper<SortedMap<Programmer, Collection<ProgrammingLanguage>>, Programmer> {
 
     @Override
-    public SortedMap<Programmer, Collection<ProgrammingLanguage>> group(Collection<Programmer> programmers) {
+    public SortedMap<Programmer, Collection<ProgrammingLanguage>> group(Collection<Programmer> toGroup) {
         Comparator<Programmer> nbOfLanguages_Name_Comparator = (o1, o2) -> {
             if (o1.getLanguages().size() == o2.getLanguages().size()) {
                 return o1.getName().compareTo(o2.getName());
@@ -16,7 +16,7 @@ class NbOfLanguagesAndNamesSorter implements Grouper<SortedMap<Programmer, Colle
 
             }
         };
-        Map<Programmer, Collection<ProgrammingLanguage>> collect = programmers.stream()
+        Map<Programmer, Collection<ProgrammingLanguage>> collect = toGroup.stream()
                 .collect(toMap(k -> k, Programmer::getLanguages));
         SortedMap<Programmer, Collection<ProgrammingLanguage>> sorted = new TreeMap<>(nbOfLanguages_Name_Comparator);
         sorted.putAll(collect);

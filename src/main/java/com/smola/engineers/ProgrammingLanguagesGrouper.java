@@ -7,8 +7,8 @@ import static java.util.stream.Collectors.toSet;
 public class ProgrammingLanguagesGrouper implements Grouper<Collection<ProgrammingLanguage>, Programmer> {
 
     @Override
-    public Collection<ProgrammingLanguage> group(Collection<Programmer> programmers) {
-        return programmers
+    public Collection<ProgrammingLanguage> group(Collection<Programmer> toGroup) {
+        return toGroup
                 .stream()
                 .flatMap(e -> e.getLanguages().stream())
                 .collect(toSet());
