@@ -11,12 +11,12 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 
 @PrepareForTest({CsvFileParser.class, TsvFileParser.class, UnknownTypeFileService.class})
-public class FileParserFacadeTest extends PowerMockTestCase {
-    private FileParserFacade fileParserFacade;
+public class FileParserServiceTest extends PowerMockTestCase {
+    private FileParserService fileParserFacade;
 
     @BeforeMethod
     public void setUp() {
-        fileParserFacade = new FileParserFacade();
+        fileParserFacade = new FileParserService();
     }
 
     @AfterMethod
@@ -31,7 +31,7 @@ public class FileParserFacadeTest extends PowerMockTestCase {
         String sampleCsvFile = "sadasd.csv";
 
         // when
-        fileParserFacade = new FileParserFacade();
+        fileParserFacade = new FileParserService();
         fileParserFacade.parseFile(sampleCsvFile);
 
         // then

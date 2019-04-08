@@ -18,7 +18,7 @@ class ClientsService {
 
     Client findByFullName(String fullName) {
         return clientRepository.findByFullName(fullName)
-                .orElseThrow(() -> new RuntimeException("CLient does not exists!"));
+                .orElseThrow(() -> new RuntimeException("Client does not exists!"));
     }
 
     Collection<Client> getClientsSortedByFullnames() {
