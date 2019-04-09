@@ -1,5 +1,6 @@
 package com.smola.engineers;
 
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.Collection;
@@ -12,9 +13,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class TsvFileParserTest {
+    private Parser<Programmer> tsvFileParser;
+
+    @BeforeClass
+    public void setUp() {
+        tsvFileParser = new TsvFileParser();
+    }
+
     @Test
     public void shouldRetrieveAllProgrammersFromCsvFile() {
-        Collection<Programmer> parsed = TsvFileParser.parse(TEST_TSV_FILE_NAME);
+        Collection<Programmer> parsed = tsvFileParser.parse(TEST_TSV_FILE_NAME);
 
         int expectedNbOfProgrammers = 10;
         assertThat(parsed).hasSize(expectedNbOfProgrammers);
@@ -22,7 +30,7 @@ public class TsvFileParserTest {
 
     @Test
     public void shouldRetrieveAllLanguagesFromCsvFile() {
-        Collection<Programmer> parsed = TsvFileParser.parse(TEST_TSV_FILE_NAME);
+        Collection<Programmer> parsed = tsvFileParser.parse(TEST_TSV_FILE_NAME);
 
         int expectedNbOfLanguages = 5;
         assertThat(getParsedLanguages(parsed)).hasSize(expectedNbOfLanguages);
@@ -38,7 +46,7 @@ public class TsvFileParserTest {
     @Test
     public void shouldThrowException_whenFileIsBroken() {
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> TsvFileParser.parse(TEST_TSV_BROKEN_FILE))
+                .isThrownBy(() -> tsvFileParser.parse(TEST_TSV_BROKEN_FILE))
                 .withMessageContaining("line 3");
     }
 }

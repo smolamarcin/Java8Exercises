@@ -13,13 +13,13 @@ import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
-class TsvFileParser {
+class TsvFileParser implements Parser<Programmer> {
     private static final String FILE_DELIMITER = "\t";
     private static final int LANGUAGE_NAME_COLUMN = 0;
     private static final int FIRST_PROGRAMMER_COLUMN = LANGUAGE_NAME_COLUMN + 1;
     private static final String NOT_ALLOWED_SEPARATORS = ".*([,;?]).*";
 
-    static Collection<Programmer> parse(String fileName) {
+    public Collection<Programmer> parse(String fileName) {
         List<Programmer> allProgrammers = new ArrayList<>();
         int lineNumber = 1;
         for (String[] line : loadFile(fileName)) {
@@ -35,7 +35,7 @@ class TsvFileParser {
         return allProgrammers;
     }
 
-    private static void validateLine(String[] line, int lineNumber) {
+    private void validateLine(String[] line, int lineNumber) {
         String singleLine = Arrays.stream(line).collect(Collectors.joining(""));
         Matcher m = Pattern.compile(NOT_ALLOWED_SEPARATORS).matcher(singleLine);
         if (m.matches()) {
@@ -43,7 +43,7 @@ class TsvFileParser {
         }
     }
 
-    private static List<String[]> loadFile(String fileName) {
+    private List<String[]> loadFile(String fileName) {
         try {
             return Files.lines(Paths.get(fileName))
                     .map(e -> e.split(FILE_DELIMITER))
@@ -53,7 +53,7 @@ class TsvFileParser {
         }
     }
 
-    private static void updateProgrammerLanguages(List<Programmer> allProgrammers, Programmer programmer, ProgrammingLanguage programmingLanguage) {
+    private void updateProgrammerLanguages(List<Programmer> allProgrammers, Programmer programmer, ProgrammingLanguage programmingLanguage) {
         allProgrammers.stream()
                 .filter(e -> e.equals(programmer))
                 .findFirst()
@@ -61,7 +61,7 @@ class TsvFileParser {
                 .orElseGet(() -> addNewProgrammer(allProgrammers, programmer, programmingLanguage));
     }
 
-    private static boolean addNewProgrammer(List<Programmer> allProgrammers, Programmer programmer, ProgrammingLanguage programmingLanguage) {
+    private boolean addNewProgrammer(List<Programmer> allProgrammers, Programmer programmer, ProgrammingLanguage programmingLanguage) {
         programmer.addLanguage(programmingLanguage);
         return allProgrammers.add(programmer);
     }

@@ -5,9 +5,9 @@ import java.util.Collection;
 import java.util.function.Function;
 
 enum FileType {
-    CSV(CsvFileParser::parse),
-    TSV(TsvFileParser::parse),
-    UNKNOWN(UnknownTypeFileService::parse);
+    CSV(s -> new CsvFileParser().parse(s)),
+    TSV(s -> new TsvFileParser().parse(s)),
+    UNKNOWN(s -> new UnknownTypeParser().parse(s));
     final Function<String, Collection<Programmer>> parsingStrategy;
 
     FileType(Function<String, Collection<Programmer>> parsingStrategy) {

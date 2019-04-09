@@ -1,5 +1,6 @@
 package com.smola.engineers;
 
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -12,10 +13,16 @@ import static com.smola.engineers.TestsConstants.TEST_CSV_FILE_NAME;
 import static org.assertj.core.api.Assertions.*;
 
 public class CsvFileParserTest {
+    private Parser<Programmer> csvFileParser;
+
+    @BeforeClass
+    public void setUp() {
+        csvFileParser = new CsvFileParser();
+    }
 
     @Test
     public void shouldRetrieveAllProgrammersFromCsvFile() {
-        Collection<Programmer> parsed = CsvFileParser.parse(TEST_CSV_FILE_NAME);
+        Collection<Programmer> parsed = csvFileParser.parse(TEST_CSV_FILE_NAME);
 
         int expectedNbOfProgrammers = 10;
         assertThat(parsed).hasSize(expectedNbOfProgrammers);
@@ -23,7 +30,7 @@ public class CsvFileParserTest {
 
     @Test
     public void shouldRetrieveAllLanguagesFromCsvFile() {
-        Collection<Programmer> parsed = CsvFileParser.parse(TEST_CSV_FILE_NAME);
+        Collection<Programmer> parsed = csvFileParser.parse(TEST_CSV_FILE_NAME);
 
         int expectedNbOfLanguages = 5;
         assertThat(getParsedLanguages(parsed)).hasSize(expectedNbOfLanguages);
@@ -39,13 +46,13 @@ public class CsvFileParserTest {
     @Test
     public void shouldThrowException_whenFileIsBroken() throws IOException {
         assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> CsvFileParser.parse(TEST_CSV_BROKEN_FILE_NAME))
+                .isThrownBy(() -> csvFileParser.parse(TEST_CSV_BROKEN_FILE_NAME))
                 .withMessageContaining("line 2");
     }
 
     @Test
     public void doNotThrowException_whenFileIsCorrect() {
-        assertThatCode(() -> CsvFileParser.parse(TEST_CSV_FILE_NAME))
+        assertThatCode(() -> csvFileParser.parse(TEST_CSV_FILE_NAME))
                 .doesNotThrowAnyException();
     }
 }

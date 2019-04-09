@@ -186,7 +186,7 @@ public class XList<E> implements List<E> {
     }
 
 
-    //todo: ask artem -> is it correct?
+    //todo: is it correct?
     public <R> XList<R> collect(Function<E, R> function) {
         List<R> collect = this.stream()
                 .map(function::apply)
