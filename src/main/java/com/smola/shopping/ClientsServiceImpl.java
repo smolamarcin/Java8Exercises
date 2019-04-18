@@ -40,6 +40,7 @@ class ClientsServiceImpl implements ClientService{
                 .sorted(byTotalPriceComparator).collect(toList());
     }
 
+
     public Collection<Order> getAllClientOrder(Client client) {
         return clientRepository.findAll()
                 .stream()

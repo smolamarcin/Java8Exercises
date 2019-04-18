@@ -1,6 +1,7 @@
 package com.smola.shopping;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,6 +16,14 @@ final class Client {
         this.orders = new ArrayList<>(orders);
     }
 
+    Client(Client client, List<Order> orders) {
+        this.id = client.getId();
+        this.fullName = client.getFullName();
+        this.orders = new ArrayList<>();
+        this.orders.addAll(client.getOrders());
+        this.orders.addAll(orders);
+    }
+
     String getId() {
         return id;
     }
@@ -24,11 +33,7 @@ final class Client {
     }
 
     List<Order> getOrders() {
-        return orders;
-    }
-
-    void updateOrders(List<Order> orders) {
-        this.orders.addAll(orders);
+        return Collections.unmodifiableList(orders);
     }
 
 
@@ -54,5 +59,6 @@ final class Client {
                 ", orders=" + orders +
                 '}';
     }
+
 
 }
