@@ -5,11 +5,9 @@ import com.smola.shopping.ClientRepository;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ClientRepositoryTest {
@@ -19,7 +17,7 @@ public class ClientRepositoryTest {
 
     @BeforeClass
     public void setUp() {
-        clients = new HashSet<>(Arrays.asList(new Client("1", "Jan Kowalski"), new Client("2", "Jan Nowak")));
+        clients = new HashSet<>(Arrays.asList(new Client("1", "Jan Kowalski", emptyList()), new Client("2", "Jan Nowak", emptyList())));
         clientRepository = new ClientRepository(clients);
     }
 

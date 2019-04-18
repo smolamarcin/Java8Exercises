@@ -3,12 +3,12 @@ package com.smola.shopping;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.Collections;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.mockito.Mockito.mock;
 
 public class ClientsFileParserServiceTest {
     private static final String TEST_FILE_NAME = "src/test/resources/clients-test.txt";
@@ -41,7 +41,7 @@ public class ClientsFileParserServiceTest {
         List<Client> allClients = fileReader.parseClients(TEST_FILE_NAME);
 
         Client clientUnderTest = allClients.stream()
-                .filter(e -> e.equals(new Client(clientUnderTestId, clientUnderTestFullname)))
+                .filter(e -> e.equals(new Client(clientUnderTestId, clientUnderTestFullname, Collections.emptyList())))
                 .findFirst().get();
 
         List<Order> clientUnderTestOrders = clientUnderTest.getOrders();

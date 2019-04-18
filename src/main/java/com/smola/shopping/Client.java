@@ -9,33 +9,28 @@ class Client {
     private final String fullName;
     private List<Order> orders;
 
-    public Client(String id, String fullName) {
+    Client(String id, String fullName, List<Order> orders) {
         this.id = id;
         this.fullName = fullName;
-        this.orders = new ArrayList<>();
+        this.orders = new ArrayList<>(orders);
     }
 
-    public Client(String id, String fullName, List<Order> orders) {
-        this.id = id;
-        this.fullName = fullName;
-        this.orders = orders;
-    }
-
-    public String getId() {
+    String getId() {
         return id;
     }
 
-    public String getFullName() {
+    String getFullName() {
         return fullName;
     }
 
-    public List<Order> getOrders() {
+    List<Order> getOrders() {
         return orders;
     }
 
-    public boolean addOrder(Order order) {
-        return orders.add(order);
+    void addOrder(List<Order> orders) {
+        this.orders.addAll(orders);
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -58,11 +53,5 @@ class Client {
                 ", fullName='" + fullName + '\'' +
                 ", orders=" + orders +
                 '}';
-    }
-
-    public void addOrder(List<Order> orders) {
-        for (Order order : orders) {
-            this.addOrder(order);
-        }
     }
 }

@@ -4,10 +4,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static com.smola.shopping.ClientsProvider.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,7 +16,6 @@ import static org.mockito.Mockito.when;
 public class ClientsServiceTest {
     private ClientRepository clientRepository;
     private ClientsService clientsService;
-    private Set<Client> clients;
     private ClientsFileReader clientsFileReader;
 
     @BeforeClass
@@ -32,7 +28,7 @@ public class ClientsServiceTest {
     @Test
     public void shouldFindClientByFullName() {
         String clientName = "Jan Kowalski";
-        when(clientRepository.findByFullName(anyString())).thenReturn(java.util.Optional.of(new Client("1", clientName)));
+        when(clientRepository.findByFullName(anyString())).thenReturn(java.util.Optional.of(new Client("1", clientName, Collections.emptyList())));
 
         Client foundedClient = clientsService.findByFullName(clientName);
 

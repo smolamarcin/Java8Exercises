@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 class ClientsFileReader {
@@ -30,20 +31,22 @@ class ClientsFileReader {
     }
 
     private void parseClientsFile(List<Client> clients, String[] singleLine) {
-        Client client = new Client(singleLine[CLIENT_ID_COLUMN], singleLine[CLIENT_FULL_NAME_COLUMN]);
-        Order singleLineOrder = new Order(
-                new Product(singleLine[PRODUCT_NAME_COLUMN], new BigDecimal(singleLine[PRODUCT_PRICE_COLUMN])), Double.valueOf(singleLine[NB_OF_PRODUCTS_COLUMN]));
-        updateClientOrders(clients, client, singleLineOrder);
+        Client client = new Client(singleLine[CLIENT_ID_COLUMN], singleLine[CLIENT_FULL_NAME_COLUMN], Arrays.asList(new Order(
+                new Product(singleLine[PRODUCT_NAME_COLUMN], new BigDecimal(singleLine[PRODUCT_PRICE_COLUMN])), Double.valueOf(singleLine[NB_OF_PRODUCTS_COLUMN]))));
+        updateClientOrders(clients, client);
     }
 
-    private void updateClientOrders(List<Client> clients, Client client, Order singleLineOrder) {
+    private void updateClientOrders(List<Client> clients, Client client) {
         clients.stream()
                 .filter(e -> e.equals(client))
                 .findFirst()
-                .map(e -> e.addOrder(singleLineOrder))
+                .map(alreadyExistingClient -> {
+                    alreadyExistingClient.addOrder(client.getOrders());
+                    return alreadyExistingClient;
+                })
                 .orElseGet(() -> {
-                    client.addOrder(singleLineOrder);
-                    return clients.add(client);
+                    clients.add(client);
+                    return client;
                 });
     }
 }
