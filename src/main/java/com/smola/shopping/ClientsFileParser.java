@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Supplier;
 
 class ClientsFileParser implements Parser<Client> {
     private static final String DELIMITER = ";";
@@ -40,18 +41,24 @@ class ClientsFileParser implements Parser<Client> {
         updateClientOrders(clients, client);
     }
 
-    private void updateClientOrders(List<Client> clients, Client client) {
-        clients.stream()
+    private Client updateClientOrders(List<Client> clients, Client client) {
+       return clients.stream()
                 .filter(e -> e.equals(client))
                 .findFirst()
-                .map(alreadyExistingClient -> {
-                    Client updatedClient = new Client(alreadyExistingClient, client.getOrders());
-                    return clients.set(clients.indexOf(alreadyExistingClient), updatedClient);
-                })
-                .orElseGet(() -> {
-                    clients.add(client);
-                    return client;
-                });
+                .map(alreadyExistingClient -> updateExistingClient(clients, client, alreadyExistingClient))
+                .orElseGet(addNewClient(clients, client));
+    }
+
+    private Supplier<Client> addNewClient(List<Client> clients, Client client) {
+        return () -> {
+            clients.add(client);
+            return client;
+        };
+    }
+
+    private Client updateExistingClient(List<Client> clients, Client client, Client alreadyExistingClient) {
+        Client updatedClient = new Client(alreadyExistingClient, client.getOrders());
+        return clients.set(clients.indexOf(alreadyExistingClient), updatedClient);
     }
 
 }
