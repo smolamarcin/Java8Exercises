@@ -6,22 +6,22 @@ import java.util.Comparator;
 
 import static java.util.stream.Collectors.toList;
 
-class ClientsService {
+class ClientsServiceImpl implements ClientService{
     private ClientRepository clientRepository;
-    private ClientsFileReader clientsFileReader;
+    private ClientsFileParser clientsFileReader;
 
-    ClientsService(ClientRepository clientRepository, ClientsFileReader clientsFileReader) {
+    ClientsServiceImpl(ClientRepository clientRepository, ClientsFileParser clientsFileReader) {
         this.clientRepository = clientRepository;
         this.clientsFileReader = clientsFileReader;
     }
 
 
-    Client findByFullName(String fullName) {
+    public Client findByFullName(String fullName) {
         return clientRepository.findByFullName(fullName)
                 .orElseThrow(() -> new RuntimeException("Client does not exists!"));
     }
 
-    Collection<Client> getClientsSortedByFullnames() {
+    public Collection<Client> getClientsSortedByFullname() {
         Comparator<Client> byNamesAndIdsComparator = Comparator.comparing(Client::getFullName)
                 .thenComparing(Client::getId);
         return clientRepository.findAll()
@@ -29,7 +29,7 @@ class ClientsService {
                 .sorted(byNamesAndIdsComparator).collect(toList());
     }
 
-    Collection<Client> getClientsSortedByOrdersValue() {
+    public Collection<Client> getClientsSortedByOrdersValue() {
         Comparator<Client> byTotalPriceComparator = (o1, o2) -> {
             BigDecimal firstClientSumOfOrder = calculateClientTotalOrderPrice(o1);
             BigDecimal secondClientSumOfOrder = calculateClientTotalOrderPrice(o2);
@@ -40,7 +40,7 @@ class ClientsService {
                 .sorted(byTotalPriceComparator).collect(toList());
     }
 
-    Collection<Order> getAllClientOrder(Client client) {
+    public Collection<Order> getAllClientOrder(Client client) {
         return clientRepository.findAll()
                 .stream()
                 .filter(e -> e.equals(client))
@@ -49,7 +49,7 @@ class ClientsService {
                 .collect(toList());
     }
 
-    BigDecimal calculateClientTotalOrderPrice(Client client) {
+    public BigDecimal calculateClientTotalOrderPrice(Client client) {
         return client.getOrders()
                 .stream()
                 .map(e -> {
@@ -60,7 +60,7 @@ class ClientsService {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    Collection<Client> getAll() {
+    public Collection<Client> getAll() {
         return clientRepository.findAll();
     }
 }

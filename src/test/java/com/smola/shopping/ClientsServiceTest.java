@@ -15,14 +15,13 @@ import static org.mockito.Mockito.when;
 
 public class ClientsServiceTest {
     private ClientRepository clientRepository;
-    private ClientsService clientsService;
-    private ClientsFileReader clientsFileReader;
-
+    private ClientsServiceImpl clientsService;
+    private ClientsFileParser clientsFileReader;
     @BeforeClass
     public void setUp() {
         clientRepository = mock(ClientRepository.class);
-        clientsFileReader = mock(ClientsFileReader.class);
-        clientsService = new ClientsService(clientRepository, clientsFileReader);
+        clientsFileReader = mock(ClientsFileParser.class);
+        clientsService = new ClientsServiceImpl(clientRepository, clientsFileReader);
     }
 
     @Test
@@ -55,7 +54,7 @@ public class ClientsServiceTest {
     public void shouldReturnClients_SortedByNames_andThenByIds() {
         when(clientRepository.findAll()).thenReturn(Arrays.asList(FIRST_CLIENT, SECOND_CLIENT, THIRD_CLIENT));
 
-        Collection<Client> clientsSortedByFullnames = clientsService.getClientsSortedByFullnames();
+        Collection<Client> clientsSortedByFullnames = clientsService.getClientsSortedByFullname();
 
         assertThat(clientsSortedByFullnames).isEqualTo(Arrays.asList(THIRD_CLIENT, SECOND_CLIENT, FIRST_CLIENT));
     }
@@ -76,4 +75,5 @@ public class ClientsServiceTest {
 
         assertThat(actual).isEqualTo(Arrays.asList(clientWhichSpentMostMoney, FIRST_CLIENT, SECOND_CLIENT));
     }
+
 }

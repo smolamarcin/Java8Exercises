@@ -3,6 +3,7 @@ package com.smola.shopping;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,11 +13,11 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class ClientsFileParserServiceTest {
     private static final String TEST_FILE_NAME = "src/test/resources/clients-test.txt";
-    ClientsFileReader fileReader;
+    ClientsFileParser fileParser;
 
     @BeforeClass
     public void setUp() {
-        fileReader = new ClientsFileReader();
+        fileParser = new ClientsFileParser();
     }
 
 
@@ -25,12 +26,12 @@ public class ClientsFileParserServiceTest {
         String nonExistingFile = "blabla";
 
         assertThatExceptionOfType(RuntimeException.class)
-                .isThrownBy(() -> fileReader.parseClients(nonExistingFile));
+                .isThrownBy(() -> fileParser.parse(nonExistingFile));
     }
 
     @Test
     public void shouldReadClientsFromFile() {
-        List<Client> clients = fileReader.parseClients(TEST_FILE_NAME);
+        Collection<Client> clients = fileParser.parse(TEST_FILE_NAME);
         assertThat(clients.size()).isEqualTo(4);
     }
 
@@ -38,7 +39,7 @@ public class ClientsFileParserServiceTest {
     public void shouldReadClientsWithTheirORders() {
         String clientUnderTestId = "c00001";
         String clientUnderTestFullname = "Kowalski Jan";
-        List<Client> allClients = fileReader.parseClients(TEST_FILE_NAME);
+        Collection<Client> allClients = fileParser.parse(TEST_FILE_NAME);
 
         Client clientUnderTest = allClients.stream()
                 .filter(e -> e.equals(new Client(clientUnderTestId, clientUnderTestFullname, Collections.emptyList())))

@@ -1,5 +1,5 @@
 package com.smola.shopping;
 
-public interface Parser<T> {
+public interface Reader<T> {
     T parse(String fileName);
 }

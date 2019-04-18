@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-class Client {
+final class Client {
     private final String id;
     private final String fullName;
-    private List<Order> orders;
+    private final List<Order> orders;
 
     Client(String id, String fullName, List<Order> orders) {
         this.id = id;
