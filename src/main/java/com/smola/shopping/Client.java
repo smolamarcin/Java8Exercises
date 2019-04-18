@@ -27,7 +27,7 @@ final class Client {
         return orders;
     }
 
-    void addOrder(List<Order> orders) {
+    void updateOrders(List<Order> orders) {
         this.orders.addAll(orders);
     }
 

@@ -44,7 +44,7 @@ class ClientsFileParser implements Parser<Client> {
                 .filter(e -> e.equals(client))
                 .findFirst()
                 .map(alreadyExistingClient -> {
-                    alreadyExistingClient.addOrder(client.getOrders());
+                    alreadyExistingClient.updateOrders(client.getOrders());
                     return alreadyExistingClient;
                 })
                 .orElseGet(() -> {
