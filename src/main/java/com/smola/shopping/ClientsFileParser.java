@@ -34,8 +34,9 @@ class ClientsFileParser implements Parser<Client> {
     }
 
     private void parseClientsFile(List<Client> clients, String[] singleLine) {
-        Client client = new Client(singleLine[CLIENT_ID_COLUMN], singleLine[CLIENT_FULL_NAME_COLUMN], Arrays.asList(new Order(
-                new Product(singleLine[PRODUCT_NAME_COLUMN], new BigDecimal(singleLine[PRODUCT_PRICE_COLUMN])), Double.valueOf(singleLine[NB_OF_PRODUCTS_COLUMN]))));
+        List<Order> orders = Arrays.asList(new Order(
+                new Product(singleLine[PRODUCT_NAME_COLUMN], new BigDecimal(singleLine[PRODUCT_PRICE_COLUMN])), Double.valueOf(singleLine[NB_OF_PRODUCTS_COLUMN])));
+        Client client = new Client(singleLine[CLIENT_ID_COLUMN], singleLine[CLIENT_FULL_NAME_COLUMN], orders);
         updateClientOrders(clients, client);
     }
 
